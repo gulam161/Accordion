@@ -1,20 +1,26 @@
-import React, { useState } from "react";
-import { IoIosArrowDropdown } from "react-icons/io";
-import { IoIosArrowDropup } from "react-icons/io";
+import React from "react";
+import { IoIosArrowDropdown, IoIosArrowDropup } from "react-icons/io";
 
-function MyAccordion({ question, answer }) {
-  const [show, setShow] = useState(false);
+function MyAccordion({ id, question, answer, isActive, setActiveId }) {
+  const handleShowAnswer = () => {
+    if (isActive) {
+      setActiveId(null); // Close the active question
+    } else {
+      setActiveId(id); // Open the clicked question
+    }
+  };
+
   return (
     <>
       <div className="main-heading">
-        <p onClick={() => setShow(!show)}>
-          {show ? <IoIosArrowDropup /> : <IoIosArrowDropdown />}
+        <p onClick={handleShowAnswer}>
+          {isActive ? <IoIosArrowDropup /> : <IoIosArrowDropdown />}
         </p>
         <h1 className="text-lg capitalize text-center tracking-wide">
           {question}
         </h1>
       </div>
-      {show && <p className="answers">{answer}</p>}
+      {isActive && <p className="answers">{answer}</p>}
     </>
   );
 }
